@@ -8,30 +8,20 @@ const n = Number(input[0]);
 const s = Number(input[1]);
 const str = input[2];
 
-const lengthP = n * 2 + 1;
+let countPattern = 0;
+let countPn = 0;
 
-let countP = 0;
+for (let i = 1; i < s - 1; i++) {
+    if (str[i - 1] === "I" && str[i] === "O" && str[i + 1] === "I") {
+        countPattern++;
+        i++;
 
-let start = 0;
-while (start <= s - lengthP) {
-    let isP = true;
+        if (countPattern >= n) countPn++;
 
-    let end = start;
-    while (end < start + lengthP) {
-        isP = (end - start) % 2 ? str[end] === 'O' : str[end] === 'I';
-
-        if (!isP) {
-            start = start === end ? start + 1 : end;
-            break;
-        }
-
-        end++;
+        continue;
     }
 
-    if (!isP) continue;
-
-    countP++;
-    start += 2;
+    countPattern = 0;
 }
 
-console.log(countP);
+console.log(countPn);
