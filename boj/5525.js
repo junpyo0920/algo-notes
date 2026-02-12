@@ -6,21 +6,32 @@ const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
 
 const n = Number(input[0]);
 const s = Number(input[1]);
+const str = input[2];
 
 const lengthP = n * 2 + 1;
 
 let countP = 0;
 
-for (let i = 0; i <= s - lengthP; i++) {
-    const sliced = input[2].slice(i, i + lengthP);
-
+let start = 0;
+while (start <= s - lengthP) {
     let isP = true;
-    for (let j = 0; j < lengthP; j++) {
-        isP = j % 2 ? sliced[j] === 'O' : sliced[j] === 'I';
-        if (!isP) break;
+
+    let end = start;
+    while (end < start + lengthP) {
+        isP = (end - start) % 2 ? str[end] === 'O' : str[end] === 'I';
+
+        if (!isP) {
+            start = start === end ? start + 1 : end;
+            break;
+        }
+
+        end++;
     }
 
-    if (isP) countP++;
+    if (!isP) continue;
+
+    countP++;
+    start += 2;
 }
 
 console.log(countP);
